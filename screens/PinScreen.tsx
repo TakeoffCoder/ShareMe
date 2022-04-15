@@ -1,6 +1,6 @@
 import { StatusBar } from "expo-status-bar";
 import { useEffect, useState } from "react";
-import { View, Text, StyleSheet, Image, Pressable } from "react-native";
+import { View, Text, StyleSheet, Image, Pressable, Alert } from "react-native";
 import {
   SafeAreaView,
   useSafeAreaInsets,
@@ -8,10 +8,29 @@ import {
 import { Ionicons } from "@expo/vector-icons";
 import { useNavigation, useRoute } from "@react-navigation/native";
 
-import pins from "../assets/data/pins";
+import { useNhostClient } from "@nhost/react";
+import RemoteImage from "../components/RemoteImage";
+
+const GET_PIN_QUERY = `
+query MyQuery ($id: uuid!) {
+  pins_by_pk(id: $id) {
+    created_at
+    id
+    image
+    title
+    user_id
+    user {
+      avatarUrl
+      displayName
+    }
+  }
+}
+`;
 
 const PinScreen = () => {
-  const [ratio, setRatio] = useState(1);
+  const [pin, setPin] = useState<any>(null);
+
+  const nhost = useNhostClient();
 
   const navigation = useNavigation();
   const route = useRoute();
@@ -19,13 +38,18 @@ const PinScreen = () => {
 
   const pinId = route.params?.id;
 
-  const pin = pins.find((p) => p.id === pinId);
+  const fetchPin = async (pinId) => {
+    const response = await nhost.graphql.request(GET_PIN_QUERY, { id: pinId });
+    if (response.error) {
+      Alert.alert("Error fetching the pin", response.error.message);
+    } else {
+      setPin(response.data.pins_by_pk);
+    }
+  };
 
   useEffect(() => {
-    if (pin?.image) {
-      Image.getSize(pin.image, (width, height) => setRatio(width / height));
-    }
-  }, [pin]);
+    fetchPin(pinId);
+  }, [pinId]);
 
   const goBack = () => {
     navigation.goBack();
@@ -39,10 +63,7 @@ const PinScreen = () => {
     <SafeAreaView style={{ backgroundColor: "black" }}>
       <StatusBar style="light" />
       <View style={styles.root}>
-        <Image
-          source={{ uri: pin.image }}
-          style={[styles.image, { aspectRatio: ratio }]}
-        />
+        <RemoteImage fileId={pin.image} />
         <Text style={styles.title}>{pin.title}</Text>
       </View>
 

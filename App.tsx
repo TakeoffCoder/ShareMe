@@ -7,10 +7,9 @@ import Navigation from "./navigation";
 
 import { NhostClient, NhostReactProvider } from "@nhost/react";
 import * as SecureStore from "expo-secure-store";
-window = undefined;
 
 const nhost = new NhostClient({
-  backendUrl:"https://ggrbpcczetovevtxxihv.nhost.run",
+  backendUrl: "https://ncdbgemunbqcfxnavetb.nhost.run",
   clientStorageType: "expo-secure-storage",
   clientStorage: SecureStore,
 });
@@ -23,12 +22,12 @@ export default function App() {
     return null;
   } else {
     return (
-      <NhostReactProvider  nhost={nhost}>
-      <SafeAreaProvider>
-        <Navigation colorScheme={colorScheme} />
+      <NhostReactProvider nhost={nhost}>
+        <SafeAreaProvider>
+          <Navigation colorScheme={colorScheme} />
 
-        <StatusBar />
-      </SafeAreaProvider>
+          <StatusBar />
+        </SafeAreaProvider>
       </NhostReactProvider>
     );
   }
