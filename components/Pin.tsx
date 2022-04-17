@@ -5,7 +5,7 @@ import { useNavigation } from "@react-navigation/native";
 import { useNhostClient } from "@nhost/react";
 import RemoteImage from "./RemoteImage";
 
-const Pin = (props) => {
+const Pin = (props: { pin: { id: any; image: any; title: any; }; }) => {
   const { id, image, title } = props.pin;
 
   const navigation = useNavigation();

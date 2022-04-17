@@ -38,7 +38,7 @@ const PinScreen = () => {
 
   const pinId = route.params?.id;
 
-  const fetchPin = async (pinId) => {
+  const fetchPin = async (pinId: any) => {
     const response = await nhost.graphql.request(GET_PIN_QUERY, { id: pinId });
     if (response.error) {
       Alert.alert("Error fetching the pin", response.error.message);

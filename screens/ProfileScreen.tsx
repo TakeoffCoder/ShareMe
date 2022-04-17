@@ -78,7 +78,6 @@ export default function ProfileScreen() {
           style={styles.image}
         />
         <Text style={styles.title}>{user.displayName}</Text>
-        <Text style={styles.subtitle}>123 Followers | 534 Followings</Text>
       </View>
 
       <MasonryList pins={user.pins} onRefresh={fetchUserData} />
