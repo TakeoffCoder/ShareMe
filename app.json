@@ -2,6 +2,8 @@
   "expo": {
     "name": "ShareMe",
     "slug": "ShareMe",
+    "privacy": "public",
+    "description": "A full stack photos sharing social Media app with Made Expo",
     "version": "1.0.0",
     "orientation": "default",
     "icon": "./assets/images/icon.png",
