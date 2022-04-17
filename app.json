@@ -20,6 +20,7 @@
       "supportsTablet": true
     },
     "android": {
+      "package": "pinterest.shareme",
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
